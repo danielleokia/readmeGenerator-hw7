@@ -47,3 +47,16 @@ const questions = [
         }
     },
 ];
+
+//runQuery function
+function runQuery(){
+    return inquirer.prompt(questions)
+    .then((answers) => {
+        console.log(answers)
+        return answers
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+}
+runQuery();
