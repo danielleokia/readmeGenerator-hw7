@@ -1,6 +1,6 @@
 const inquirer = require('inquirer')
 const MarkDown = require('./generateMarkdown')
-const fs = 
+const fs = require('fs')
 const questions = [
     {
         type: 'input',
@@ -16,12 +16,12 @@ const questions = [
     {
         type: 'input',
         name: 'installation',
-        message: 'Installation instructions?'
+        message: 'What are the installation instructions?'
     },
     {
         type: 'input',
         name: 'usage',
-        message: 'Project usage?'
+        message: 'How is the app used? Give instructions'
     },
     {
         type: 'input',
@@ -41,8 +41,8 @@ const questions = [
     {
         type: 'list',
         name: 'license',
-        message: 'Project Licensing?',
-        choices: ['MIT', 'ISC', 'GNUPLv3'],
+        message: 'What license is being used?',
+        choices: ['MIT', 'ISC', 'GNUGPLv3'],
         filter(val){
             return val.toLowerCase();
         }
@@ -54,7 +54,14 @@ function runQuery(){
     return inquirer.prompt(questions)
     .then((answers) => {
         const mark = MarkDown.generateReadme(answers)
-        console.log(mark)
+        fs.writeFile('README.md', mark, function (error) {
+            if(error) {
+                console.log('could not save file', error)
+            } else {
+                console.log('success!')
+
+            }
+        })
         return answers
     })
     .catch((error) => {

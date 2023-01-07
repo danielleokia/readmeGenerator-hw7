@@ -1,26 +1,54 @@
-// TODO: Create a function that returns a license badge based on which license is passed in
-// If there is no license, return an empty string
-function renderLicenseBadge(license) {}
 
-// TODO: Create a function that returns the license link
-// If there is no license, return an empty string
-function renderLicenseLink(license) {}
 
-// TODO: Create a function that returns the license section of README
-// If there is no license, return an empty string
-function renderLicenseSection(license) {}
-
-// TODO: Create a function to generate markdown for README
 class MarkDown { 
+    //function to generate license badges
+    static renderLicenseBadge(license){
+        const newLicense = license.toUpperCase()
+        const badges = {
+            MIT: '[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)',
+            ISC: '[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)',
+            GNUGPLv3: '[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)',
+        }
+        console.log(badges[newLicense])
+        
+        return badges[newLicense]
+    }
+    static renderLicenseLink(license){
+        const newLicenseLinks = license.toUpperCase()
+        const licenseLinks = {
+            MIT: '[MIT](https://choosealicense.com/licenses/mit/)',
+            ISC: '[ISC](https://choosealicense.com/licenses/isc/)',
+            GNUGPLv3: '[GNUGPLv3](https://choosealicense.com/licenses/gpl-3.0/)',
+        }
+        console.log(licenseLinks[newLicenseLinks])
+         return licenseLinks[newLicenseLinks]
+    }
+//function returns the license section of README
+    static renderLicenseSection(license) {
+        
+        if(license) {
+            return `Licensed under the ${this.renderLicenseLink(license)} license`
+        } else{
+            return ''
+        }
+    }
+
+
+
+
+    //function to generate README file
     static generateReadme(answers) {
-  return `
+        return `
   # ${answers.title}
+
+${this.renderLicenseBadge(answers.license)}
+
   ## Table of Contents
   - [Project description](#description)
   - [Project usage](#usage)
   - [Contribution](#contribution)
   - [Installation](#installation)
-  - [Licensing](#lisence)
+  - [License](#license)
   - [Questions](#questions)
 
   ## Description
@@ -39,12 +67,10 @@ class MarkDown {
   ${answers.email}
   ${answers.github}
 
-  ##License
-  ${answers.license}
+  ## License
+  ${this.renderLicenseSection(answers.license)}
 
-
-
-`;
+`
 }
  }
 
